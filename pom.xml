@@ -49,6 +49,7 @@
 	</properties>
 
 	<modules>
+		<module>espm-ui-reviews-web</module>
 		<module>espm-ui-shopping-web</module>
 	</modules>
 

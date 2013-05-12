@@ -1,0 +1,6 @@
+Name=cloudextensionbackend
+URL=https://webcloudmodelextespmhana.hana.ondemand.com/espm-model-extension-web/espm.svc
+Type=HTTP
+Authentication=NoAuthentication
+TrustAll=true
+ProxyType=Internet

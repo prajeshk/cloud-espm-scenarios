@@ -37,6 +37,7 @@ Table of Contents
    * Import the espm/pom.xml root pom as "Existing Maven projects" into your Eclipse workspace
      imported projects:
       |- espm
+      |- espm-ui-reviews-web
       |- espm-ui-shopping-web
 
 1.2 How to build 'espm' projects
@@ -46,11 +47,11 @@ Table of Contents
 3. Choose run to start the Maven build
 
 
-2. ESPM Ui Web Project
-======================
+2. ESPM Ui Web Projects
+=======================
 
-2.1 How to run ESPM Ui Web application on local server
-------------------------------------------------------
+2.1 How to run ESPM Ui Web applications on local server
+-------------------------------------------------------
 2.1.1 Backend configurations
 (this is optional, because the defaults should always work) 
 
@@ -65,6 +66,10 @@ Table of Contents
    * See espm/destinations/cloudbackend
    Images base URL, user and password:
    * See espm/destinations/cloudbackendImages
+
+1c HANA Cloud extension backend is configured for application 'webcloudmodelext' and account 'espmhana':
+   OData service:
+   * See espm/destinations/cloudextensionbackend
 
 2.1.2 Create and Configure SAP HANA Cloud local runtime
    * On Servers view: New > Server; select SAP > SAP HANA Cloud local runtime; 
@@ -84,16 +89,18 @@ Table of Contents
      ii)  espm/destinations/abapbackendimages
      iii) espm/destinations/cloudbackend
      iv)  espm/destinations/cloudbackendimages
+     in case of espm-ui-reviews-web import also
+     v)   espm/destinations/cloudextensionbackend
 
 2.1.3 Run web application on SAP HANA Cloud local runtime
    * Select project node espm-ui-shopping-web
    * From context menu choose Run As > Run on Server.
    * Choose 'Choose existing server option' and select the before created local server
    * Choose Finish to start up the local server.
-   * Browser opens and displays the initial page of the web application 'espm-ui-shopping-web'
+   * Browser opens and displays the initial page of the web application (either 'espm-ui-shopping-web' or 'espm-ui-reviews-web')
 
-2.2 How to run ESPM Ui Web application on HANA Cloud
-----------------------------------------------------
+2.2 How to run ESPM Ui Web applications on HANA Cloud
+-----------------------------------------------------
 
 2.2.1 Backend configurations 
 (this is optional, because the defaults should always work)
@@ -115,16 +122,19 @@ The backend configuration works the same as described above for the local server
      ii)  espm/destinations/abapbackendimages
      iii) espm/destinations/cloudbackend
      iv)  espm/destinations/cloudbackendimages
+     in case of espm-ui-reviews-web import also
+     v)   espm/destinations/cloudextensionbackend
 
 2.2.3 Deploy on SAP HANA Cloud
-   * Select project node espm-ui-shopping-web
+   * Select project node (espm-ui-shopping-web or espm-ui-reviews-web )
    * From context menu choose Run As > Run on Server.
    * Choose 'Choose existing server option' and select the before created local server
    * Choose Finish to start up the local server.
-   * Browser opens and displays the initial page of the web application 'espm-ui-shopping-web'
+   * Browser opens and displays the initial page of the web application (either 'espm-ui-shopping-web' or 'espm-ui-reviews-web')
 
-   Example: ESPM web application launch Url (running on SAP HANA Factory landscape)
+   Example: ESPM web application launch Urls (running on SAP HANA Factory landscape)
    webshopping app: https://webshoppingespmhana.hana.ondemand.com/espm-ui-shopping-web/
+   webreviews app: https://webreviewsespmhana.hana.ondemand.com/espm-ui-reviews-web/
 
 
 2.3 Ui Integration tests
