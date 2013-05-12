@@ -2,4 +2,6 @@
 .textViewMarginsLeftRight {
 	margin: 0 6px 0 6px; 
 }
-
+.layoutPaddingProductDetails { 
+	padding: 5px 5px 5px 5px; 
+}

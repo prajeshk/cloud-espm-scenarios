@@ -33,6 +33,8 @@ var oMainView = sap.ui.view({
 
 // get OData Model from server, using JSON format
 sap.app.odatamodel = new sap.ui.model.odata.ODataModel("proxy/" + sap.app.utility.getBackendDestination(), true);
+sap.app.odatamodel.setCountSupported(false);
+sap.app.odatamodel.attachRequestCompleted(this, sap.app.readOdata.requestCompleted);
 
 // ensure that CSRF token is not taken from cache
 sap.app.odatamodel.refreshSecurityToken();

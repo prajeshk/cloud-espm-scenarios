@@ -49,6 +49,8 @@
 	</properties>
 
 	<modules>
+		<module>espm-model-extension-jpa</module>
+		<module>espm-model-extension-web</module>
 		<module>espm-ui-reviews-web</module>
 		<module>espm-ui-shopping-web</module>
 	</modules>

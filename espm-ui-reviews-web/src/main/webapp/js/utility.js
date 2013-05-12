@@ -1,8 +1,8 @@
 jQuery.sap.declare("sap.app.utility");
 
 /*
- * Use window.localStorage to store user preferences per browser. The userf can define preferences (like backend type,
- * OData service URL, etc) in the settings dialog.
+ * Use window.localStorage to store user preferences per browser. The user can define preferences (as backend type) in
+ * the settings dialog.
  */
 sap.app.localStorage = {
 	PREF_USE_ABAP_BACKEND : "preferences.useAbapBackend",
@@ -68,6 +68,22 @@ sap.app.utility = {
 		return ("cloudextensionbackend");
 	},
 
+	getBackendImagesDestination : function() {
+		if (sap.app.localStorage.getPreference(sap.app.localStorage.PREF_USE_ABAP_BACKEND)) {
+			return ("abapbackendimages");
+		} else {
+			return ("cloudbackendimages");
+		}
+	},
+
+	getImagesBaseUrl : function() {
+		if (sap.app.localStorage.getPreference(sap.app.localStorage.PREF_USE_ABAP_BACKEND)) {
+			return (sap.app.config.abapImagesBaseUrl);
+		} else {
+			return (sap.app.config.cloudImagesBaseUrl);
+		}
+	},
+
 	getBackendTypeText : function() {
 		if (sap.app.localStorage.getPreference(sap.app.localStorage.PREF_USE_ABAP_BACKEND)) {
 			return (sap.app.i18n.getProperty("DATA_SOURCE_INFO_ABAP_BACKEND"));
@@ -86,7 +102,32 @@ sap.app.utility = {
 
 };
 
+sap.app.uivisibility = {
+	// product selection panel
+	showProductSelectionPanel : function() {
+		sap.app.mainController.getCachedView("reviews").getController().showProductSelectionPanel();
+	},
+	setUiControlIsVisible : function(id, isVisible) {
+		var uiControl = sap.ui.getCore().byId(id);
+		if (uiControl !== null) {
+			uiControl.setVisible(isVisible);
+		}
+	}
+};
+
 sap.app.readOdata = {
+
+	requestCompleted : function(oEvent) {
+		var oProductsDropdownBox = sap.ui.getCore().byId("product-selection-dropdown-box-id");
+
+		if (oProductsDropdownBox != null && oProductsDropdownBox.getSelectedKey() != "") {
+			// set binding context on product details controls
+			var selectedItemId = oProductsDropdownBox.getSelectedItemId();
+			var bindingCtx = sap.ui.getCore().byId(selectedItemId).getBindingContext();
+			sap.app.mainController.getCachedView("product-selection").getController().setProductDetailsBindingContext(
+					bindingCtx);
+		}
+	},
 
 	readCategoriesSuccess : function(oData, response) {
 		// prepare main- and child-categories by setting up a tree structure for the categories
@@ -127,8 +168,8 @@ sap.app.readOdata = {
 			AvailableCategories : oData.results
 		});
 
-		sap.app.mainController.getCachedView("item2").setModel(oCategoryChooserModel);
-		sap.ui.getCore().byId("item2-dropdown-box-id").setSelectedKey(
+		sap.app.mainController.getCachedView("categories-selection").setModel(oCategoryChooserModel);
+		sap.ui.getCore().byId("categories-selection-dropdown-box-id").setSelectedKey(
 				sap.app.i18n.getProperty("ALL_CATEGORIES_LIST_ENTRY"));
 
 		function compareCategory(a, b) {
@@ -146,10 +187,6 @@ sap.app.readOdata = {
 	readError : function(oError) {
 		var sMessageText = sap.app.i18n.getProperty("MSG_ERROR_ODATA_READ") + ": " + oError.message;
 		sap.ui.commons.MessageBox.alert(sMessageText);
-	},
-
-	readSuccess : function() {
-		sap.ui.commons.MessageBox.alert("Success message.");
 	}
 
 };

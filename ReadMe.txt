@@ -7,6 +7,10 @@ Table of Contents
 2.1   How to run ESPM Ui Web applications on local server
 2.2   How to run ESPM Ui Web applications on HANA Cloud
 2.3   Ui Integration tests
+3.  ESPM Model Extension Projects
+3.1   How to run espm-model-extension-web OData integration test
+3.2   How to run 'espm-model-extension-web' on SAP HANA Cloud local runtime
+3.3   How to run 'espm-model-extension-web' on SAP HANA Cloud
 
 
 1. Import and Build ESPM Projects
@@ -37,6 +41,8 @@ Table of Contents
    * Import the espm/pom.xml root pom as "Existing Maven projects" into your Eclipse workspace
      imported projects:
       |- espm
+      |- espm-model-extension-jpa
+      |- espm-model-extension-web
       |- espm-ui-reviews-web
       |- espm-ui-shopping-web
 
@@ -160,3 +166,47 @@ The backend configuration works the same as described above for the local server
              - [optional] -Dintegration.test.server.url=http://localhost:9080 (this is the default value)
              - [optional] -Dintegration.test.application.relpath=/espm-ui-shopping-web (this is the default value)
              - Run configured JUnit test
+
+3.  ESPM Model Extension Projects
+=================================
+3.1 How to run espm-model-extension-web OData integration test
+--------------------------------------------------------------
+   Odata Integration Tests are disabled by default. To execute odata integration test during the build activate the profile local-integration-tests. 
+   This can done by running maven build (see section 1.2) with additional configuration
+   - Parameters:
+      * local.integration.tests: true
+
+3.2 How to run 'espm-model-extension-web' on SAP HANA Cloud local runtime
+-------------------------------------------------------------------------
+   * Select project node 'espm-model-extension-web'
+   * From context menu choose Run As > Run on Server.
+   * On Servers view: Choose 'Manually define a new server' option and select SAP > SAP HANA Cloud local runtime as server type
+   * Choose Finish to start up the local server.
+   * Browser opens and launches the base URL of the OData service of the espm-model-extension-web application
+     http://localhost:8080/espm-model-extension-web/espm.svc (if the default port 8080 was free when creating the local server)
+     OData Service example URL to retrieve the list of CustomerReview stored initially in the database of espm-model-extension:
+     Confirm that http://localhost:8080/espm-model-extension-web/espm.svc/CustomerReviews results in a list of Customer Reviews
+
+3.3 How to run 'espm-model-extension-web' on SAP HANA Cloud
+-----------------------------------------------------------
+
+3.3.1 Create a new SAP HANA Cloud server
+   * Configure your SAP HANA Cloud Server Eclipse preferences: 'Server' > 'SAP HANA Cloud'
+   * On Servers view: New > Server; select option 'Manually define a new server'
+   * Select SAP > 'SAP HANA Cloud' and choose Next
+   * Specify the parameters for the SAP HANA Cloud Application to be run on the new server 
+     (e.g. application: 'webextensionmodel' and account: '<YOUR ACCOUNT NAME>')
+   * Choose Finish to create a new server (without any application yet)
+
+3.3.2 Deploy on SAP HANA Cloud
+   * Select project node 'espm-model-extension-web'
+   * From context menu choose Run As > Run on Server.
+   * Choose 'Choose existing server option' and select the before created local server
+   * Choose Finish to start up the local server.
+   * Browser opens and displays the initial page of the 'espm-model-extension-web' application
+
+   Example launch URLs: 
+   * ESPM model web application URL which launches the OData extension service (running on SAP HANA Factory landscape)
+   webcloudmodelext app: https://webcloudmodelextespmhana.hana.ondemand.com/espm-model-extension-web/espm.svc
+   * Launch model extension service to display the available customer reviews:
+   https://webcloudmodelextespmhana.hana.ondemand.com/espm-model-extension-web/espm.svc/CustomerReviews

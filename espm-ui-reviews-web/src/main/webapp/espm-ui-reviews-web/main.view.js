@@ -23,14 +23,8 @@ sap.ui.jsview("espm-ui-reviews-web.main", {
 			showPane : true,
 			paneWidth : 500,
 			worksetItems : [ new sap.ui.ux3.NavigationItem({
-				id : "nav-item1",
-				text : "{i18n>SHELL_WORKSET_ITEM_1}"
-			}), new sap.ui.ux3.NavigationItem({
-				id : "nav-item2",
-				text : "{i18n>SHELL_WORKSET_ITEM_2}",
-			}), new sap.ui.ux3.NavigationItem({
-				id : "nav-item3",
-				text : "{i18n>SHELL_WORKSET_ITEM_3}",
+				id : "nav-customer-reviews-id",
+				text : "{i18n>SHELL_WORKSET_ITEM_CUSTOMER_REVIEWS}"
 			}) ]
 		});
 
@@ -43,14 +37,8 @@ sap.ui.jsview("espm-ui-reviews-web.main", {
 		});
 		oShell.addHeaderItem(oSettingsButton);
 
-		// action when shell workset item  are clicked
-		oShell.attachWorksetItemSelected(function(oEvent) {
-			var sViewName = oEvent.getParameter("id").replace("nav-", "");
-			oShell.setContent(oController.getCachedView(sViewName));
-		});
-
 		// initial shell content
-		oShell.addContent(oController.getCachedView("item1"));
+		oShell.addContent(oController.getCachedView("reviews"));
 
 		return oShell;
 

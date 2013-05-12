@@ -1,7 +1,7 @@
-sap.ui.jsview("espm-ui-reviews-web.item2", {
+sap.ui.jsview("espm-ui-reviews-web.categories-selection", {
 
 	getControllerName : function() {
-		return "espm-ui-reviews-web.item2";
+		return "espm-ui-reviews-web.categories-selection";
 	},
 
 	createContent : function(oController) {
@@ -19,7 +19,7 @@ sap.ui.jsview("espm-ui-reviews-web.item2", {
 
 	getCategoriesDropdownBox : function(oController) {
 		var oCategoriesDropdownBox = new sap.ui.commons.DropdownBox({
-			id : "item2-dropdown-box-id",
+			id : "categories-selection-dropdown-box-id",
 			width : "100%",
 			change : function(oEvent) {
 				oController.selectedCategoryChanged(oEvent.oSource.getSelectedKey());
@@ -33,6 +33,6 @@ sap.ui.jsview("espm-ui-reviews-web.item2", {
 		}));
 
 		return oCategoriesDropdownBox;
-	}
+	},
 
 });

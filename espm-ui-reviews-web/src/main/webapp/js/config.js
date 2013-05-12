@@ -16,12 +16,17 @@ sap.app.config = {
 	cloudExtentionOdataServiceUrl : "https://webcloudmodelextespmhana.hana.ondemand.com/espm-model-extension-web/espm.svc",
 	// see destinations/cloudbackend
 	cloudOdataServiceUrl : "https://webcloudmodelespmhana.hana.ondemand.com/espm-model-web/jpa.svc",
+
 	// see destinations/abapbackend
-	abapOdataServiceUrlWithLogin : "http://EPM_TEST:Epm12345@ldcigiq.wdf.sap.corp:50015/sap/opu/odata/IWBEP/EPM_DEVELOPER_SCENARIO_SRV/",
+	abapOdataServiceUrlWithLogin : "http://ESPM_TEST:Espm1234@54.225.119.138:50000/sap/opu/odata/IWBEP/EPM_DEVELOPER_SCENARIO_SRV/",
 
 	// for settings dialog
-	displayAbapOdataServiceUrl : "http://ldcigiq.wdf.sap.corp:50015/sap/opu/odata/IWBEP/EPM_DEVELOPER_SCENARIO_SRV/",
-	displayAbapUser : "EPM_TEST",
-	displayAbapPassword : "Epm12345",
+	displayAbapOdataServiceUrl : "http://54.225.119.138:50000/sap/opu/odata/IWBEP/EPM_DEVELOPER_SCENARIO_SRV/",
+	displayAbapUser : "ESPM_TEST",
+	displayAbapPassword : "Espm1234",
 
+	abapImagesBaseUrl : "",
+	cloudImagesBaseUrl : "/espm-model-web/images/",
+
+	productPlaceholderImg : "images/placeholder.product.150x150.png",
 };
