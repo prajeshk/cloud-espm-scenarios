@@ -1,4 +1,4 @@
-sap.ui.controller("espm-ui-reviews-web.customer-reviews", {
+sap.ui.controller("espm-ui-shopping-web.customer-reviews", {
 
 	onInit: function () {
 
@@ -36,9 +36,6 @@ sap.ui.controller("espm-ui-reviews-web.customer-reviews", {
 			var oModelFilters = [];
 			oModelFilters.push( oModelFilter );
 
-			// As bindRows is an aync call the getBinding().filter method call might get lost
-			// so the filter has to be passed in the same call and not separately
-			// check issue https://jtrack/browse/NGPBUG-7580
 			oRowRepeater.bindRows("/CustomerReviews", this.oView.getRowRepeaterTemplate(), oModelSorter, oModelFilters );
 			oRowRepeater.getBinding("rows").filter(oModelFilters);
 		} else{

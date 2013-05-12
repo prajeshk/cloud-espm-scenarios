@@ -211,22 +211,22 @@ sap.ui.jsview("espm-ui-shopping-web.checkout", {
 			sap.ui.getCore().byId("checkout-proceed-button-1").setText( sap.app.i18n.getProperty("BTN_PROCEED") );
 		}
 
-		if (that.oRoadMapCheckout.currentSelectedStep == "checkout-step-2") {
-			if (sStepId == "checkout-step-1" && this.getModel().getProperty("/customer/EmailAddress") == "") {
-				// if no email is entered a navigation back to the first view should be possible
-				sap.app.messages.removeMessage("address-email");
-			} else {
-				// dont allow navigation to proceed if email is invalid
-				if (sStepId == "checkout-step-3"
-						&& !sap.app.checkoutController.checkCustomerEmailValid(that.oRoadMapCheckout)) {
-					this.oRoadMapCheckout.setSelectedStep("checkout-step-2");
-					return;
-				} else {
-					// just in case
-					sap.app.messages.removeMessage("address-email");
-				}
-			}
-		}
+        if (that.oRoadMapCheckout.currentSelectedStep == "checkout-step-2"){
+            if (sStepId == "checkout-step-1" && this.getModel().getProperty("/customer/EmailAddress") == ""){
+                // if no email is entered a navigation back to the first view should be possible
+                sap.app.messages.removeMessage( "address-email" );
+            } else{ 
+                    // dont allow navigation to proceed if email is invalid 
+                    if (sStepId == "checkout-step-3" 
+                            && !sap.app.checkoutController.checkCustomerEmailValid(that.oRoadMapCheckout)){
+                            this.oRoadMapCheckout.setSelectedStep("checkout-step-2");
+                            return;
+                    } else {
+                        // just in case
+                        sap.app.messages.removeMessage( "address-email" );
+                    }
+            }
+        }
 
 		switch (sStepId) {
 			case "checkout-step-2":

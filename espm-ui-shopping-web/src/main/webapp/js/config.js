@@ -12,10 +12,19 @@ sap.app.config = {
 	// If 'true' welcome dialog is displayed
 	displayWelcomeDialog : true,
 
+	// If 'true' data source information is displayed in 'Select a Product' area (Abap or HANA Cloud) and 
+	// 'Customer reviews of selected product' area
+	displayDataSourceInfo : false,
+
+	// If 'true' Customer Reviews contents are displayed as a third tab
+	displayCustomerReview : false,
+
 	abapImagesBaseUrl : "",
 	cloudImagesBaseUrl : "/espm-model-web/images/",
 
 	// backend details used in settings and for odata service Url links. Keep this data in sync destinations 
+	// see destinations/cloudextensionbackend
+	cloudExtentionOdataServiceUrl : "https://webcloudmodelextespmhana.hana.ondemand.com/espm-model-extension-web/espm.svc",
 	// see destinations/cloudbackend
 	cloudOdataServiceUrl : "https://webcloudmodelespmhana.hana.ondemand.com/espm-model-web/jpa.svc",
 	// see destinations/abapbackend

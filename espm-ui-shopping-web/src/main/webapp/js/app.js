@@ -159,6 +159,7 @@ if (sap.app.localStorage.getPreference(sap.app.localStorage.PREF_USE_ABAP_BACKEN
 
 //ensure that CSRF token is not taken from cache
 sap.app.odatamodel.refreshSecurityToken();
+sap.app.odatamodel.attachRequestCompleted(this, sap.app.readOdata.requestCompleted);
 
 // set model to core
 sap.ui.getCore().setModel(sap.app.odatamodel);
@@ -166,5 +167,13 @@ sap.ui.getCore().setModel(sap.app.odatamodel);
 // get categories from OData model and set into JSON model of search.view. It is necessary to add entry 'All Categories' which is
 // not available in a OData model
 sap.app.odatamodel.read("/ProductCategories", null, null, false, sap.app.readOdata.readCategoriesSuccess, sap.app.readOdata.readError);
+
+// get extension business data (product reviews related data)
+sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel("proxy/"
+		+ sap.app.utility.getExtensionBackendDestination());
+sap.app.extensionodatamodel.attachRequestCompleted(this, sap.app.readExtensionOData.extensionRequestCompleted);
+
+// set model to core as extensionodatamodel
+sap.ui.getCore().setModel(sap.app.extensionodatamodel, "extensionodatamodel");
 
 oMainView.placeAt("content");

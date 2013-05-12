@@ -8,6 +8,8 @@ sap.app.localStorage = {
 
 	PREF_USE_ABAP_BACKEND : "preferences.useAbapBackend",
 	PREF_DISPLAY_WELCOME_DIALOG : "preferences.displayWelcomeDialog",
+	PREF_DISPLAY_DATA_SOURCE_INFO : "preferences.displayDataSourceInfo",
+	PREF_DISPLAY_CUSTOMER_REVIEWS : "preferences.mergeCustomerReviewsTab",
 
 	getDefaultPreference : function(sKey) {
 		switch (sKey) {
@@ -15,6 +17,10 @@ sap.app.localStorage = {
 			return sap.app.config.useAbapBackend;
 		case sap.app.localStorage.PREF_DISPLAY_WELCOME_DIALOG:
 			return sap.app.config.displayWelcomeDialog;
+		case sap.app.localStorage.PREF_DISPLAY_DATA_SOURCE_INFO:
+			return sap.app.config.displayDataSourceInfo;
+		case sap.app.localStorage.PREF_DISPLAY_CUSTOMER_REVIEWS:
+			return sap.app.config.displayCustomerReview;
 		default:
 			throw "Invalid preference key " + sKey;
 		}
@@ -39,6 +45,10 @@ sap.app.localStorage = {
 				if (sKey == sap.app.localStorage.PREF_USE_ABAP_BACKEND) {
 					return (storedValue === 'true');
 				} else if (sKey == sap.app.localStorage.PREF_DISPLAY_WELCOME_DIALOG) {
+					return (storedValue === 'true');
+				} else if (sKey == sap.app.localStorage.PREF_DISPLAY_DATA_SOURCE_INFO) {
+					return (storedValue === 'true');
+				} else if (sKey == sap.app.localStorage.PREF_DISPLAY_CUSTOMER_REVIEWS) {
 					return (storedValue === 'true');
 				} else {
 					return (storedValue);
@@ -85,6 +95,26 @@ sap.app.utility = {
 			return (sap.app.config.abapImagesBaseUrl);
 		} else {
 			return (sap.app.config.cloudImagesBaseUrl);
+		}
+	},
+
+	getExtensionBackendDestination : function() {
+		return ("cloudextensionbackend");
+	},
+
+	getBackendTypeText : function() {
+		if (sap.app.localStorage.getPreference(sap.app.localStorage.PREF_USE_ABAP_BACKEND)) {
+			return (sap.app.i18n.getProperty("DATA_SOURCE_INFO_ABAP_BACKEND"));
+		}else{
+			return (sap.app.i18n.getProperty("DATA_SOURCE_INFO_HANA_CLOUD"));
+		}
+	},
+
+	getDataSourceInfoOdataServiceUrl : function() {
+		if (sap.app.localStorage.getPreference(sap.app.localStorage.PREF_USE_ABAP_BACKEND)) {
+			return (sap.app.config.abapOdataServiceUrlWithLogin);
+		}else{
+			return (sap.app.config.cloudOdataServiceUrl);
 		}
 	},
 
@@ -236,7 +266,122 @@ sap.app.utility = {
 	},
 
 };
+
+
+sap.app.uivisibility = {
+	// product selection panel
+	showProductSelectionPanel : function() {
+		sap.app.mainController.getCachedView("reviews").getController().showProductSelectionPanel();
+	},
+	setUiControlIsVisible : function(id, isVisible) {
+		var uiControl = sap.ui.getCore().byId(id);
+		if (uiControl !== null) {
+			uiControl.setVisible(isVisible);
+		}
+	},
+
+	// customer reviews panel (filled)
+	showFilledCustomerReviewsPanel : function() {
+		sap.app.mainController.getCachedView("reviews").getController().showFilledCustomerReviewsPanel();
+	},
+	// customer reviews panel (empty)
+	showEmptyCustomerReviewsPanel : function() {
+		sap.app.mainController.getCachedView("reviews").getController().showEmptyCustomerReviewsPanel();
+	},
+	// customer reviews panel (loading)
+	showLoadingCustomerReviewsPanel : function() {
+		sap.app.mainController.getCachedView("reviews").getController().showLoadingCustomerReviewsPanel();
+	},
+	// row repeater
+	showRowRepeater : function() {
+		sap.app.mainController.getCachedView("customer-reviews").getController().showRowRepeater();
+	},
+	hideRowRepeater : function() {
+		sap.app.mainController.getCachedView("customer-reviews").getController().hideRowRepeater();
+	},
+	// row repeater header
+	showRowRepeaterHeaderLayout : function() {
+		sap.app.mainController.getCachedView("customer-reviews").getController().showRowRepeaterHeaderLayout();
+	},
+	hideRowRepeaterHeaderLayout : function() {
+		sap.app.mainController.getCachedView("customer-reviews").getController().hideRowRepeaterHeaderLayout();
+	},
+	// row repeater footer
+	showRowRepeaterFooterLayout : function() {
+		sap.app.mainController.getCachedView("customer-reviews").getController().showRowRepeaterFooterLayout();
+	},
+	hideRowRepeaterFooterLayout : function() {
+		sap.app.mainController.getCachedView("customer-reviews").getController().hideRowRepeaterFooterLayout();
+	}
+
+};
+
+sap.app.readExtensionOData = {
+
+	extensionRequestCompleted : function(oEvent) {
+
+		// calculate average rating
+		var extensionODataModel = sap.ui.getCore().getModel("extensionodatamodel");
+		var selectedProductId = sap.app.mainController.getCachedView("customer-reviews").getModel().getData()["selectedProductId"];
+		var obj = extensionODataModel.getProperty("/");
+		var customerReviewsCnt = 0;
+		var ratingSum = 0.0;
+		for ( var prop in obj) {
+			if (selectedProductId === obj[prop].ProductId) {
+				ratingSum += parseFloat(obj[prop].Rating);
+				customerReviewsCnt++;
+			}
+		}
+
+		// customer reviews exists
+		if (customerReviewsCnt > 0) {
+			// set average rating value
+			sap.app.mainController.getCachedView("customer-reviews").getController().setRatingIndicatorValue(
+					ratingSum / customerReviewsCnt);
+
+			// show filled customer reviews panel
+			sap.app.uivisibility.showFilledCustomerReviewsPanel();
+		} else {
+			// show empty customer reviews panel
+			sap.app.uivisibility.showEmptyCustomerReviewsPanel();
+		}
+	},
+};
+
 sap.app.readOdata = {
+
+	requestCompleted : function(oEvent) {
+		var oProductsDropdownBox = sap.ui.getCore().byId("product-selection-dropdown-box-id");
+
+		if (oProductsDropdownBox != null && oProductsDropdownBox.getSelectedKey() != "") {
+			// set binding context on product details controls
+			var selectedItemId = oProductsDropdownBox.getSelectedItemId();
+			var bindingCtx = sap.ui.getCore().byId(selectedItemId).getBindingContext();
+			sap.app.mainController.getCachedView("product-selection").getController().setProductDetailsBindingContext(
+					bindingCtx);
+
+			// If selected product changed implicitly by changing of category then 'selectedProductIdChanged' event has
+			// to be fired.
+			if (sap.app.readOdata.getSelectedProductImplicitlyChanged) {
+				sap.app.readOdata.setSelectedProductImplicitlyChanged(false);
+
+				var oEventBus = sap.ui.getCore().getEventBus();
+				oEventBus.publish("sap.app", "selectedProductIdChanged", oProductsDropdownBox.getSelectedKey());
+
+				sap.app.uivisibility.showLoadingCustomerReviewsPanel();
+			}
+		}
+	},
+
+	getSelectedProductImplicitlyChanged : function() {
+		sap.app.mainController.getCachedView("categories-selection").getController()
+				.getSelectedProductImplicitlyChanged();
+	},
+
+	setSelectedProductImplicitlyChanged : function(bValue) {
+		sap.app.mainController.getCachedView("categories-selection").getController()
+				.setSelectedProductImplicitlyChanged(bValue);
+	},
 
 	getCustomerByEmailAddress: function ( ){
 		var that = this;
@@ -287,7 +432,32 @@ sap.app.readOdata = {
 		oCategoryModel.setData( { mainCategories: aCategories } );
 		// assign the category model to the categorie view
 		sap.app.mainController.getCachedView("categories").setModel(oCategoryModel);
-},
+
+		// create new model for categories
+		var oCategoryChooserModel = new sap.ui.model.json.JSONModel();
+		//create new entry for all categories
+		var oNewCategoryEntry = {};
+		oNewCategoryEntry["Category"] = sap.app.i18n.getProperty("ALL_CATEGORIES_LIST_ENTRY");
+		oData.results.sort(compareCategory);
+		// add new entry to model
+		oData.results.unshift(oNewCategoryEntry);
+		oCategoryChooserModel.setData({AvailableCategories:oData.results});
+		oCategoryChooserModel.setProperty("selectedProductImplicitlyChanged", true);
+
+		sap.app.mainController.getCachedView("categories-selection").setModel(oCategoryChooserModel);
+		sap.ui.getCore().byId("categories-selection-dropdown-box-id").setSelectedKey(
+				sap.app.i18n.getProperty("ALL_CATEGORIES_LIST_ENTRY"));
+
+		function compareCategory(a, b) {
+			if (a.Category < b.Category) {
+				return -1;
+			}
+			if (a.Category > b.Category) {
+				return 1;
+			}
+			return 0;
+		}
+	},
 
 	createCustomer: function (oData, response) {
 		if (response.statusCode == 201) {
@@ -321,6 +491,11 @@ sap.app.readOdata = {
 		var sMessageText = sap.app.i18n.getProperty("MSG_ERROR_ODATA_READ") + ": " + oError.message;
 		sap.app.messages.addMessage(sMessageText, sap.ui.core.MessageType.Error , "odata_read_failed");
 		sap.app.utility.clearMessagesAfter(sap.app.config.messageDuration);
+	},
+
+	createCustomerReviewSuccess : function(oError) {
+		sap.ui.commons.MessageBox.alert(sap.app.i18n.getProperty("CUSTOMER_REVIEW_SUCCESS_MSG"));
 	}
+
 };
 

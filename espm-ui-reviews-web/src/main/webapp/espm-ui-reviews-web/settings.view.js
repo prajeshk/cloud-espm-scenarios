@@ -182,7 +182,7 @@ sap.ui.jsview("espm-ui-reviews-web.settings", {
 		} else {
 			testLinkForABAP = sap.app.config.abapOdataServiceUrlWithLogin;
 		}
-
+		
 		// abap test url link
 		oAbapBackendTypeMatrixLayout.createRow(new sap.ui.commons.layout.MatrixLayoutCell({
 			content : [ new sap.ui.commons.Label({

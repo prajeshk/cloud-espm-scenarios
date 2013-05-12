@@ -70,6 +70,28 @@ sap.ui.jsview("espm-ui-shopping-web.settings", {
 			content : [ this.getAbabBackendDetailsLayout() ]
 		}));
 
+		// display data source info
+		oSettingsLayout.createRow(new sap.ui.commons.layout.MatrixLayoutCell({
+			colSpan : 2,
+			content : [ new sap.ui.commons.Label({
+				text : "{i18n>DISPLAY_DATA_SOURCE_INFO_LABEL}"
+			}).addStyleClass("textViewMarginsLeftRight"), new sap.ui.commons.CheckBox({
+				id : "cloud-odata-display-data-source-info-chkbox-id",
+				checked : sap.app.localStorage.getPreference(sap.app.localStorage.PREF_DISPLAY_DATA_SOURCE_INFO)
+			}) ]
+		}));
+
+		// merge customer reviews tab
+		oSettingsLayout.createRow(new sap.ui.commons.layout.MatrixLayoutCell({
+			colSpan : 2,
+			content : [ new sap.ui.commons.Label({
+				text : "{i18n>MERGE_CUSTOMER_REVIEWS_TAB_LABEL}"
+			}).addStyleClass("textViewMarginsLeftRight"), new sap.ui.commons.CheckBox({
+				id : "display-customer-reviews-chkbox-id",
+				checked : sap.app.localStorage.getPreference(sap.app.localStorage.PREF_DISPLAY_CUSTOMER_REVIEWS)
+			}) ]
+		}));
+
 		return (oSettingsLayout);
 	},
 

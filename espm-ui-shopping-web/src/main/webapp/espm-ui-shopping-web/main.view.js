@@ -40,6 +40,13 @@ sap.ui.jsview("espm-ui-shopping-web.main", {
 			paneContent : oController.getCachedView("cart"),
 		});
 
+		if(sap.app.localStorage.getPreference(sap.app.localStorage.PREF_DISPLAY_CUSTOMER_REVIEWS)){
+			oShell.addWorksetItem(new sap.ui.ux3.NavigationItem({
+				id : "nav-reviews",
+				text : "{i18n>SHELL_WORKSET_ITEM_CUSTOMER_REVIEWS}"
+			}));
+		}
+
 		var oSettingsButton = new sap.ui.commons.Button({
 			text : "{i18n>SHELL_HEADER_ITEM_SETTINGS_TEXT}",
 			tooltip : "{i18n>SHELL_HEADER_ITEM_SETTINGS_TOOLTIP}",
