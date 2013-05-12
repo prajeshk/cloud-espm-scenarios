@@ -145,9 +145,9 @@ The backend configuration works the same as described above for the local server
 
 2.3 Ui Integration tests
 ------------------------
-
 2.3.1 Automated Selenium Ui Test
-   0.  The Selenium UI test is defined in EspmShoppingWebUiIT.java
+   0.  The Selenium UI test for Web Shopping Application is defined in EspmShoppingWebUiIT.java and for Web Reviews Application
+       in CustomerReviewsIT.java
    1.  Run Selenium UI test as part of Maven build (Automated Test)
        Maven Run Configuration:
          - Goals: value depends on network proxy 
@@ -155,16 +155,16 @@ The backend configuration works the same as described above for the local server
              ii) Network without proxy: 'verify -Dlocal.integration.tests -D local.integration.tests -Dlocal.server.proxy.settings= -Dbrowser.proxy.settings=' 
          - Parameters:
            * [optional] integration.test.server.url: http://localhost:9080 (this is the default value)
-           * [optional] integration.test.application.relpath: /espm-ui-shopping-web (this is the default value)
+           * [optional] integration.test.application.relpath: /espm-ui-shopping-web or /espm-ui-reviews-web (this is the default value) 
    2. Run Selenium UI test manually from Eclipse (this allows also to debug the Ui integratin tests, just use 'Debug As')
         - 1. Create a local test server with port 9080(!) as described in '2.1.2 Create and Configure SAP HANA Cloud local runtime' 
-        - 2. Run 'espm-ui-shopping-web' as described 2.1.3 Run web application on SAP HANA Cloud local runtime
+        - 2. Run 'espm-ui-shopping-web' or 'espm-ui-reviews-web' as described 2.1.3 Run web application on SAP HANA Cloud local runtime. 
         - 3. Create and Run new JUnit Run configuration
              - First select 'JUnit 4' as Testrunner (default is JUnit 3 which does not work) 
-             - Project: espm-ui-shopping-web
-             - Testclass: com.sap.espm.shopping.web.EspmShoppingWebUiIT
+             - Project: espm-ui-shopping-web or espm-ui-reviews-web
+             - Testclass: com.sap.espm.shopping.web.EspmShoppingWebUiIT or com.sap.espm.ui.reviews.web.CustomerReviewsIT (in case of espm-ui-reviews-web)
              - [optional] -Dintegration.test.server.url=http://localhost:9080 (this is the default value)
-             - [optional] -Dintegration.test.application.relpath=/espm-ui-shopping-web (this is the default value)
+             - [optional] -Dintegration.test.application.relpath=/espm-ui-shopping-web or /espm-ui-reviews-web (this is the default value)
              - Run configured JUnit test
 
 3.  ESPM Model Extension Projects

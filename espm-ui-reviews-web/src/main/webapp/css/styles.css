@@ -5,3 +5,22 @@
 .layoutPaddingProductDetails { 
 	padding: 5px 5px 5px 5px; 
 }
+.textViewMarginCustomerReviewHeader {
+	margin: 0 5px 0 0px; 
+}
+.layoutPaddingCustomerReviewHeader { 
+	padding: 13px 0 0 3px; 
+}
+.ratingIndicatorPadding { 
+	padding: 13px 0 0 3px; 
+}
+.hiddenRowRepeaterToolbarCustomerReviews .sapUiTbCont{
+    display: none;
+}
+.hiddenRowRepeaterBarCustomerReviews .sapUiRrPtb{
+    display: none;
+}
+.hiddenTextViewProductId {
+    display: none;
+}
+

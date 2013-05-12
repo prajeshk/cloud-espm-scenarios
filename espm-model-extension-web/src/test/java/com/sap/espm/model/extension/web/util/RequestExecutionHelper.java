@@ -24,7 +24,7 @@ public class RequestExecutionHelper {
 			.getProperty(INTEGRATION_TEST_SERVER_URL) + ESPM_SERVICE_BASE_URI;
 
 	/**
-	 * Run a http et request
+	 * Run a http get request
 	 * 
 	 * @param serviceEndPoint
 	 * @return http response

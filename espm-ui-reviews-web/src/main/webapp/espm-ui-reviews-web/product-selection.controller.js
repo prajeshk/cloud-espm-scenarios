@@ -38,7 +38,11 @@ sap.ui.controller("espm-ui-reviews-web.product-selection", {
 		var selectedItemId = oEvent.oSource.getSelectedItemId();
 		var bindingCtx = sap.ui.getCore().byId(selectedItemId).getBindingContext();
 		this.getView().getController().setProductDetailsBindingContext(bindingCtx);
-	},
+
+		var oEventBus = sap.ui.getCore().getEventBus();
+		var selectedKey = oEvent.oSource.getSelectedKey();
+		oEventBus.publish("sap.app", "selectedProductIdChanged", selectedKey);
+},
 
 	setProductDetailsBindingContext : function(bindingCtx) {
 		sap.ui.getCore().byId("selected-product-image-id").setBindingContext(bindingCtx);

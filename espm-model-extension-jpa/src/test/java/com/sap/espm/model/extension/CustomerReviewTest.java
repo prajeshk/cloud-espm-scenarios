@@ -33,8 +33,7 @@ public class CustomerReviewTest extends AbstractTest {
 
 			em.getTransaction().begin();
 			// search for customer review
-			customerReview = (CustomerReview) em.find(CustomerReview.class,
-					customerReviewId);
+			customerReview = em.find(CustomerReview.class,customerReviewId);
 			assertNotNull(
 					"Search for customer review failed: no entity with customerReviewID '0000000001' was found in database",
 					customerReview);

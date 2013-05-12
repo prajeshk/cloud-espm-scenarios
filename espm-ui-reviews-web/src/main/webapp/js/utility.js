@@ -112,6 +112,86 @@ sap.app.uivisibility = {
 		if (uiControl !== null) {
 			uiControl.setVisible(isVisible);
 		}
+	},
+
+	// customer reviews panel (filled)
+	showFilledCustomerReviewsPanel : function() {
+		sap.app.mainController.getCachedView("reviews").getController().showFilledCustomerReviewsPanel();
+	},
+	// customer reviews panel (empty)
+	showEmptyCustomerReviewsPanel : function() {
+		sap.app.mainController.getCachedView("reviews").getController().showEmptyCustomerReviewsPanel();
+	},
+	// customer reviews panel (loading)
+	showLoadingCustomerReviewsPanel : function() {
+		sap.app.mainController.getCachedView("reviews").getController().showLoadingCustomerReviewsPanel();
+	},
+	// row repeater
+	showRowRepeater : function() {
+		sap.app.mainController.getCachedView("customer-reviews").getController().showRowRepeater();
+	},
+	hideRowRepeater : function() {
+		sap.app.mainController.getCachedView("customer-reviews").getController().hideRowRepeater();
+	},
+	// row repeater header
+	showRowRepeaterHeaderLayout : function() {
+		sap.app.mainController.getCachedView("customer-reviews").getController().showRowRepeaterHeaderLayout();
+	},
+	hideRowRepeaterHeaderLayout : function() {
+		sap.app.mainController.getCachedView("customer-reviews").getController().hideRowRepeaterHeaderLayout();
+	},
+	// row repeater footer
+	showRowRepeaterFooterLayout : function() {
+		sap.app.mainController.getCachedView("customer-reviews").getController().showRowRepeaterFooterLayout();
+	},
+	hideRowRepeaterFooterLayout : function() {
+		sap.app.mainController.getCachedView("customer-reviews").getController().hideRowRepeaterFooterLayout();
+	}
+};
+
+sap.app.readExtensionOData = {
+
+	requestCompleted : function(oEvent) {
+
+		var oExtensionODataModel = sap.ui.getCore().getModel("extensionodatamodel");
+		var oReviews = oExtensionODataModel.getProperty("/");
+		var sSelectedProductId = sap.app.mainController.getCachedView("customer-reviews").getModel().getData()["selectedProductId"];
+		var oRatingInfo = sap.app.readExtensionOData.getRatingInfo(oReviews, sSelectedProductId);
+
+		// customer reviews exists
+		if (oRatingInfo.iReviewsCount > 0) {
+			// set average rating value
+			sap.app.mainController.getCachedView("customer-reviews").getController().setRatingIndicatorValue(
+					oRatingInfo.fAverageRating);
+
+			// show filled customer reviews panel
+			sap.app.uivisibility.showFilledCustomerReviewsPanel();
+		} else {
+			// show empty customer reviews panel
+			sap.app.uivisibility.showEmptyCustomerReviewsPanel();
+		}
+	},
+
+	getRatingInfo : function(oReviews, sSelectedProductId) {
+		var iReviewsCount = 0;
+		var fRatingsSum = 0.0;
+		var fAverageRating = 0.0;
+
+		for (var sReviewId in oReviews) {
+			var oReview = oReviews[sReviewId];
+			if (sSelectedProductId === oReview.ProductId) {
+				iReviewsCount++;
+				fRatingsSum += parseFloat(oReview.Rating);
+			}
+		}
+
+		if (iReviewsCount > 0) {
+			fAverageRating = fRatingsSum / iReviewsCount;
+		}
+		return {
+			iReviewsCount : iReviewsCount,
+			fAverageRating : fAverageRating
+		};
 	}
 };
 
@@ -126,7 +206,28 @@ sap.app.readOdata = {
 			var bindingCtx = sap.ui.getCore().byId(selectedItemId).getBindingContext();
 			sap.app.mainController.getCachedView("product-selection").getController().setProductDetailsBindingContext(
 					bindingCtx);
+
+			// If selected product changed implicitly by changing of category then 'selectedProductIdChanged' event has
+			// to be fired.
+			if (sap.app.readOdata.getSelectedProductImplicitlyChanged) {
+				sap.app.readOdata.setSelectedProductImplicitlyChanged(false);
+
+				var oEventBus = sap.ui.getCore().getEventBus();
+				oEventBus.publish("sap.app", "selectedProductIdChanged", oProductsDropdownBox.getSelectedKey());
+
+				sap.app.uivisibility.showLoadingCustomerReviewsPanel();
+			}
 		}
+	},
+
+	getSelectedProductImplicitlyChanged : function() {
+		sap.app.mainController.getCachedView("categories-selection").getController()
+				.getSelectedProductImplicitlyChanged();
+	},
+
+	setSelectedProductImplicitlyChanged : function(bValue) {
+		sap.app.mainController.getCachedView("categories-selection").getController()
+				.setSelectedProductImplicitlyChanged(bValue);
 	},
 
 	readCategoriesSuccess : function(oData, response) {
@@ -167,6 +268,7 @@ sap.app.readOdata = {
 		oCategoryChooserModel.setData({
 			AvailableCategories : oData.results
 		});
+		oCategoryChooserModel.setProperty("selectedProductImplicitlyChanged", true);
 
 		sap.app.mainController.getCachedView("categories-selection").setModel(oCategoryChooserModel);
 		sap.ui.getCore().byId("categories-selection-dropdown-box-id").setSelectedKey(
@@ -192,6 +294,5 @@ sap.app.readOdata = {
 	createCustomerReviewSuccess: function (oError) {
 		sap.ui.commons.MessageBox.alert( sap.app.i18n.getProperty("CUSTOMER_REVIEW_SUCCESS_MSG") );
 	}
-
 
 };

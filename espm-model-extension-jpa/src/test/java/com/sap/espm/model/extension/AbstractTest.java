@@ -28,6 +28,9 @@ public abstract class AbstractTest {
 
 	@After
 	public void after() {
+		if (em.getTransaction().isActive()) {
+			em.getTransaction().rollback();
+		}
 		this.em.close();
 	}
 

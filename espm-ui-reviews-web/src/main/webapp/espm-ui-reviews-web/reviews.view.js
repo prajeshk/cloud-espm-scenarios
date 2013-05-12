@@ -10,7 +10,8 @@ sap.ui.jsview("espm-ui-reviews-web.reviews", {
 			id : "reviews-view-layout-id",
 		});
 
-		oReviewsViewLayout.createRow(this.getProductSelectionPanel());
+		oReviewsViewLayout.createRow( this.getProductSelectionPanel() );
+		oReviewsViewLayout.createRow( this.getCustomerReviewsPanel() );
 
 		return oReviewsViewLayout;
 	},
@@ -79,4 +80,35 @@ sap.ui.jsview("espm-ui-reviews-web.reviews", {
 
 		return oProductSelectionPanel;
 	},
+
+	/**
+	 * Panel contains the list of available customer reviews of the product
+	 * which has been selected in the product selection panel
+	 * 
+	 * @returns {sap.ui.commons.Panel}
+	 */
+	getCustomerReviewsPanel: function() {
+		var oProductReviewsListLayout = new sap.ui.commons.layout.MatrixLayout({
+			width : "100%",
+		});
+
+		oProductReviewsListLayout
+				.createRow(new sap.ui.commons.layout.MatrixLayoutCell(
+						{
+							content : [ sap.app.mainController.getCachedView("customer-reviews") ]
+						}));
+
+		var oCustomerReviewsPanel = new sap.ui.commons.Panel({
+			id : "reviews-view-customer-reviews-panel-id",
+			visible : false,
+			width : "100%",
+			areaDesign : sap.ui.commons.enums.AreaDesign.Plain,
+			borderDesign : sap.ui.commons.enums.BorderDesign.None,
+			showCollapseIcon : false,
+			content : [oProductReviewsListLayout],
+			title : new sap.ui.commons.Title({text: "{i18n>REVIEWS_LIST_PANEL_TITLE}"})
+		});
+
+		return oCustomerReviewsPanel;
+	}
 });

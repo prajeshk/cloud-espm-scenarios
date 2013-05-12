@@ -53,5 +53,6 @@ sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel("proxy/"
 
 // set model to core as extensionodatamodel
 sap.ui.getCore().setModel(sap.app.extensionodatamodel, "extensionodatamodel");
+sap.app.extensionodatamodel.attachRequestCompleted(this, sap.app.readExtensionOData.requestCompleted);
 
 oMainView.placeAt("content");

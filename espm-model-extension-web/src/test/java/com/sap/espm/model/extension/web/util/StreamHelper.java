@@ -14,7 +14,7 @@ public class StreamHelper {
 	private StreamHelper() {
 	}
     /**
-     * Read Stream contenet
+     * Read Stream content
      * @param stream
      * @return stream as String
      * @throws IOException
