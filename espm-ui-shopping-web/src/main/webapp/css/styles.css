@@ -1,0 +1,271 @@
+/* set size of shell pane bar if it is open */
+.sapUiUx3ShellPaneBarOpen {
+	width: 600px !important;
+}
+/* set background color in a pane bar */
+.sapUiUx3ShellPaneBarContent {
+	background-color: #f2f2f2;
+	padding: 20px;
+}
+
+ /* Category/Supplier listing */
+.category-list {
+	margin-top: 40px;
+	width: 46%;
+	float: left;
+	margin-right: 4%;
+}
+
+.category-list .sapUiRrPtb {
+	width: 100%;
+}
+
+.category-list .sapUiRrLogo,
+.category-list .sapUiRrFilters,
+.category-list .sapUiRrCtrl {
+	display: none;
+}
+
+.category-list .sapUiRrTitle {
+	text-transform: uppercase;
+	font-size: 140%;
+	padding-bottom: 4px;
+	width: 100%;
+}
+
+.category-list .sapUiRrBody {
+	background-color: #fff;
+	padding-top: 10px;
+}
+
+.category-list .sapUiRrFtr {
+	display: none;
+}
+
+.category-list .sapUiRrRow {
+	margin-left: 12px;
+	margin-bottom: 10px;
+}
+
+/** styles in productDetail **/
+.price-big-size {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+/* Styles in products view */
+.product-sorter-label {
+	margin-top: 4px;
+	margin-right: 6px;
+}
+
+/** styles with a name 'control id' + '-body' is generated from runtime and used to set a style for RowRepeater **/
+#product-rr-body .sapUiRrRow,
+#shopping-cart-rr-body .sapUiRrRow,
+#checkout-cart-rr-body .sapUiRrRow {
+	margin-top: 5px;
+	background-color: #fff;
+	padding: 10px 10px 4px;
+}
+/** styles for view id = "products" **/
+.product-column-1-table {
+	width: 50%;
+	min-width: 400px;
+	float: left;
+}
+.product-column-2-table {
+	width: 50%;
+	min-width: 350px;
+	float: right;
+}
+
+/** styles for view id = "cart" **/
+#shopping-cart-rr .sapUiRrLogo {
+	padding-right: 10px;
+}
+.cart-remove {
+	margin-left: 20px;
+	margin-top: 2px;
+}
+#cart-total-amount {
+	font-size: 24px;
+	font-weight: bold;
+	margin: 20px 0;
+}
+
+#shopping-cart-panebar-item {
+	background-image: url('../images/icon.cart.90deg.24x24.png');
+	background-repeat: no-repeat;
+	background-position: 0 8px;
+	padding-left: 28px;
+	text-transform: uppercase;
+}
+
+/** styles for view id = "addToCart" **/
+/*color for addToCart view */
+#addToCart {
+	background-color: white;
+}
+/* color for panel*/
+#add-to-cart-content{
+	background-color: #f2f2f2;
+}
+/* color for layout */
+.add-to-cart-layout{	
+	background-color: white;
+	margin: 5px;
+}
+/* style for text in popup */
+.addToCart-text {
+	margin-top: 10px;
+}
+.addToCart-item{
+	background-color: white;
+	border-bottom-width: 1px;
+	border-bottom-color: grey;
+	border-bottom-style: solid;
+	height: 25px;
+	margin-top: 20px;
+}
+.addToCart-product{
+	margin-top: 6px;
+	padding-top: 10px;
+	background-color: white;
+	border-bottom-width: 1px;
+	border-bottom-color: grey;
+	border-bottom-style: solid;
+	height: 25px;
+}
+/* style for a price in a popup */
+.addToCart-price{
+	margin-top: 5px;
+}
+
+/** styles for view id = "checkout" **/
+#checkout-cart-total-amount{
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+/* checkout view */
+#checkout-layout-header .sapUiBtn,
+#checkout-layout-footer .sapUiBtn {
+	margin-left: 10px;
+}
+#checkout-layout-content .sapuiVlt {
+	vertical-align: top;
+}
+/* checkoutStep1 view */
+.price-middle-size {
+	font-size: 16px;
+	margin-right: 10px;
+	margin-left: 20px;
+
+}
+/* checkoutStep4 view */
+.checkout-summary-area {
+	margin-bottom: 30px;
+}
+/* style for icons of credit card in checkoutStep3 view*/
+.icon-card-padding{
+	padding-left: 10px;
+}
+
+#products-list-title {
+	margin-top: 30px;
+}
+
+/** styles for Notepad-Control product-actions **/
+/* product-actions control */
+.product-actions .product-actions-row {
+	margin-bottom: 4px;
+}
+.product-actions.product-actions-list .product-actions-row {
+	width: 100%;
+}
+.product-actions .product-actions-quantity-label {
+	display: inline-block;
+	float: left;
+	text-align: left;
+	padding-top: 2px;
+}
+.product-actions.product-actions-list .product-actions-quantity-label {
+	width: 75%;
+}
+.product-actions.product-actions-detail .product-actions-quantity-label {
+	width: 70%;
+}
+.product-actions .product-actions-quantity-field {
+	display: inline-block;
+	float: right;
+}
+.product-actions.product-actions-list .product-actions-quantity-field {
+	width: 25%;
+}
+.product-actions.product-actions-detail .product-actions-quantity-field {
+	width: 30%;
+}
+.product-actions.product-actions-detail .product-actions-row {
+	width: 45%;
+}
+.product-actions.product-actions-detail .product-actions-quantity {
+	float: left;
+}
+.product-actions.product-actions-detail .product-actions-buynow,
+.product-actions.product-actions-detail .product-actions-addtocart {
+	float: right;
+}
+
+/** end product-actions control **/
+
+/* helper styles */
+.product-actions-cleaner{
+	clear: both;
+}
+
+.uppercase {
+	text-transform: uppercase;
+}
+.controlMargin {
+	margin: 30px 30px 30px 30px; 
+}
+/* welcome dialog */
+.welcomeDlg {
+	background-color: #FFFFFF !important;
+}
+.welcomeDlg .sapUiDlgHdr {
+	border-bottom: 0px solid #FFFFFF !important;
+}
+.welcomeDlg .sapUiDlgCont {
+	background-color: #FFFFFF !important;
+	padding: 10px 25px 12px;
+}
+.welcomeHeaderTextAlign {
+	font-size: 22px !important;
+	padding-left: 5px;
+}
+/* helper styles */
+.textViewMarginsLeftRight {
+	margin: 0 6px 0 6px; 
+}
+.layoutPaddingProductDetails { 
+	padding: 5px 5px 5px 5px; 
+}
+.textViewMarginCustomerReviewHeader {
+	margin: 0 5px 0 0px; 
+}
+.layoutPaddingCustomerReviewHeader { 
+	padding: 13px 0 0 3px; 
+}
+.ratingIndicatorPadding { 
+	padding: 13px 0 0 3px; 
+}
+.hiddenRowRepeaterToolbarCustomerReviews .sapUiTbCont{
+    display: none;
+}
+.hiddenRowRepeaterBarCustomerReviews .sapUiRrPtb{
+    display: none;
+}
+.hiddenTextViewProductId {
+    display: none;
+}

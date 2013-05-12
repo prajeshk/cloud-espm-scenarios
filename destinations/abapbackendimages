@@ -1,0 +1,7 @@
+Name=abapbackendimages
+URL=http://54.225.119.138:50000/
+Type=HTTP
+Authentication=BasicAuthentication
+User=ESPM_TEST
+Password=Espm1234
+ProxyType=Internet

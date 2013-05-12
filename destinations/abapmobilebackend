@@ -1,0 +1,7 @@
+URL=https://smpmaas-espmhana.netweaver.ondemand.com/espm_shopping_abap
+Name=abapmobilebackend
+TrustAll=true
+Type=HTTP
+Password=Espm1234
+Authentication=BasicAuthentication
+User=ESPM_TEST

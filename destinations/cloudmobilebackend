@@ -1,0 +1,5 @@
+URL=https://smpmaas-espmhana.netweaver.ondemand.com/public/espm_shopping_cloud
+Name=cloudmobilebackend
+TrustAll=true
+Type=HTTP
+Authentication=NoAuthentication

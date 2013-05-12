@@ -1,0 +1,6 @@
+Name=cloudbackend
+URL=https://webcloudmodelespmhana.hana.ondemand.com/espm-model-web/jpa.svc
+Type=HTTP
+Authentication=NoAuthentication
+TrustAll=true
+ProxyType=Internet

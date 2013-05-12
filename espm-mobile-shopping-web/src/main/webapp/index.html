@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+       <head>
+              <meta http-equiv="X-UA-Compatible" content="IE=edge">             
+ 			<!--   <script type="text/javascript" src="resources/sap/ui/thirdparty/jquery/jquery-1.7.1.js"></script>
+              <script type="text/javascript" src="resources/sap/ui/thirdparty/jqueryui/jquery-ui-position.js"></script>  -->
+				
+   			  <script src="resources/sap-ui-core.js"
+                      id="sap-ui-bootstrap"
+                      type="text/javascript"
+                      data-sap-ui-libs="sap.m"
+                      data-sap-ui-theme="sap_mvi" >
+              </script>
+              <!-- only load the mobile lib "sap.m" and the "sap_mvi" theme -->
+			  <link rel="stylesheet" type="text/css" href="index.css">
+			  
+	  
+   			  <script>
+   			  
+   			  		 jQuery.sap.registerModulePath('app', 'js');
+   			  		 jQuery.sap.require("app.config");   			  		 
+			         sap.ui.localResources("espm-mobile-shopping");
+                     var app = new sap.m.App({initialPage:"idapp1"});
+                     var page = sap.ui.view({id:"idapp1", viewName:"espm-mobile-shopping.App", type:sap.ui.core.mvc.ViewType.JS});
+                     app.addPage(page);
+                     app.placeAt("content");
+   			  </script>
+
+       </head>
+       <body class="sapUiBody" id="content">
+              <!--  <div id="content"></div> -->
+       </body>
+</html>

@@ -1,0 +1,22 @@
+{
+	"customer": {
+		"CustomerId" : null,
+		"EmailAddress": "",
+		"FirstName": "",
+		"LastName": "",
+		"DateOfBirth": null,
+		"PostalCode": "",
+		"City": "",
+		"Street": "",
+		"Country": ""
+	},
+	"payment": {
+		"type": "card-gold",
+		"cardOwner": "",
+		"cardNumber": "",
+		"cardSecurityCode": "",
+		"cardExpireDate": null
+	},
+	"items": [],
+	"order": []
+}
