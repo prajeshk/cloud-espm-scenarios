@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	you under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.sap.espm</groupId>
+	<artifactId>espm</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- Properties that hold host and port of proxy if you have one - otherwise 
+			set local.server.proxy.settings and browser.proxy.settings values empty -->
+		<proxy.host>proxy</proxy.host>
+		<proxy.port>8080</proxy.port>
+		<local.server.proxy.settings>--httpProxyHost ${proxy.host} --httpProxyPort ${proxy.port} --httpsProxyHost ${proxy.host} --httpsProxyPort ${proxy.port}</local.server.proxy.settings>
+		<browser.proxy.settings>-Dhttp.proxyHost=${proxy.host} -Dhttp.proxyPort=${proxy.port} -Dhttps.proxyHost=${proxy.host} -Dhttps.proxyPort=${proxy.port}</browser.proxy.settings>
+	
+		<!-- Properties that hold information on the location and version of the SAP HANA Cloud SDK -->
+		<sap.cloud.sdk.version>1.26.6.2</sap.cloud.sdk.version>
+		<sap.cloud.sdk.path>C:/dev/hanacloud.sdk/${sap.cloud.sdk.version}</sap.cloud.sdk.path>
+
+		<!-- Properties needed to reference sapui5 -->
+		<sap.cloud.ui5.version>1.10.4</sap.cloud.ui5.version>
+		<eclipse.path>C:/dev/eclipse</eclipse.path>
+
+		<!-- Properties that hold the local server information required for local 
+			integration testing -->
+		<local.server.root>${project.build.directory}/server</local.server.root>
+		<local.server.host>localhost</local.server.host>
+
+		<!-- Property that holds the source path to the backend destinations -->
+		<destinations.path>${basedir}/../destinations</destinations.path>
+
+		<persistence.osgi.hdb.platform.version>0.6.9</persistence.osgi.hdb.platform.version>
+	</properties>
+
+	<modules>
+		<module>espm-ui-shopping-web</module>
+	</modules>
+
+	<repositories>
+		<repository>
+			<id>EclipseLink</id>
+			<url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-library</artifactId>
+			<version>1.2.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>2.31.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.9.1.0</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.3</version> <!-- prevent Maven warning -->
+				</plugin>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-dependency-plugin
+										</artifactId>
+										<versionRange>[2.4,)</versionRange>
+										<goals>
+											<goal>copy-dependencies</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute>
+											<runOnIncremental>false</runOnIncremental>
+										</execute>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<profiles>
+		<!-- Choose correct command line scripts for interaction with SAP HANA 
+			Cloud based on detected operating system -->
+		<profile>
+			<id>unix-scripts</id>
+			<activation>
+				<os>
+					<family>Unix</family>
+				</os>
+			</activation>
+			<properties>
+				<sap.cloud.console.shell>sh</sap.cloud.console.shell>
+				<sap.cloud.console.script>neo.sh</sap.cloud.console.script>
+			</properties>
+		</profile>
+		<profile>
+			<id>windows-scripts</id>
+			<activation>
+				<os>
+					<family>Windows</family>
+				</os>
+			</activation>
+			<properties>
+				<sap.cloud.console.shell>cmd</sap.cloud.console.shell>
+				<sap.cloud.console.script>/c neo.bat</sap.cloud.console.script>
+			</properties>
+		</profile>
+	</profiles>
+
+</project>

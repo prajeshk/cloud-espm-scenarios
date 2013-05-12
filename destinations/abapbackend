@@ -1,0 +1,7 @@
+Name=abapbackend
+URL=http://54.225.119.138:50000/sap/opu/odata/IWBEP/EPM_DEVELOPER_SCENARIO_SRV/
+Type=HTTP
+Authentication=BasicAuthentication
+User=ESPM_TEST
+Password=Espm1234
+ProxyType=Internet
