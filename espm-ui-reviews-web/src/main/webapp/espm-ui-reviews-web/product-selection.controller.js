@@ -44,6 +44,33 @@ sap.ui.controller("espm-ui-reviews-web.product-selection", {
 		sap.ui.getCore().byId("selected-product-image-id").setBindingContext(bindingCtx);
 		sap.ui.getCore().byId("selected-product-name-view-id").setBindingContext(bindingCtx);
 		sap.ui.getCore().byId("selected-product-desc-view-id").setBindingContext(bindingCtx);
+	},
+
+	openCustomerReviewCreationDialog: function() {
+		var oCustomerReviewCreationView = sap.app.mainController.getCachedView("customer-review-creation");
+		var oCustomerReviewCreationDialog = sap.ui.getCore().byId("customer-review-creation-dialog-id");
+
+		if( oCustomerReviewCreationDialog==null){
+			oCustomerReviewCreationDialog = new sap.ui.commons.Dialog({
+				id : "customer-review-creation-dialog-id",
+				showCloseButton : true,
+				resizable : true,
+				title : "{i18n>CREATE_REVIEW_DIALOG_TITLE}",
+				buttons : [ new sap.ui.commons.Button({
+						id : "customer-review-creation-submit-button-id",
+						text : "{i18n>SUBMIT_BUTTON}",
+						enabled: false,
+						press : function(){oCustomerReviewCreationView.getController().publishReview(
+								sap.ui.getCore().byId(
+										"product-selection-dropdown-box-id")
+										.getSelectedKey());}
+								}) ],
+				content : [oCustomerReviewCreationView],
+			});
+			oCustomerReviewCreationDialog.addButton();
+		}
+		oCustomerReviewCreationView.getController().resetReviewCreationForm();
+		oCustomerReviewCreationDialog.open();
 	}
 
 });

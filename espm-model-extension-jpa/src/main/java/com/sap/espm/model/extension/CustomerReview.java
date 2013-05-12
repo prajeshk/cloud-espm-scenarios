@@ -27,7 +27,7 @@ public class CustomerReview implements Serializable {
 	@Column(name = "CUSTOMER_REVIEW_ID", length = 16)
 	private String customerReviewId;
 
-	@Column(name = "COMMENT")
+	@Column(name = "COMMENT", length = 1024)
 	private String comment;
 
 	@Column(name = "RATING", length = 1)

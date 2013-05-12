@@ -29,6 +29,18 @@ sap.ui.jsview("espm-ui-reviews-web.product-selection", {
 			}), this.getProductDetailsLayout() ]
 		}));
 
+		// write customer review button
+		oProductSelectionMatrixLayout
+				.createRow(new sap.ui.commons.layout.MatrixLayoutCell(
+						{
+							hAlign : sap.ui.commons.layout.HAlign.Left,
+							content : [ new sap.ui.commons.Button(
+									{
+										text : "{i18n>WRITE_CUSTOMER_REVIEW_BUTTON}",
+										press : oController.openCustomerReviewCreationDialog
+									}) ]
+						}));
+
 		return oProductSelectionMatrixLayout;
 	},
 

@@ -187,6 +187,11 @@ sap.app.readOdata = {
 	readError : function(oError) {
 		var sMessageText = sap.app.i18n.getProperty("MSG_ERROR_ODATA_READ") + ": " + oError.message;
 		sap.ui.commons.MessageBox.alert(sMessageText);
+	},
+
+	createCustomerReviewSuccess: function (oError) {
+		sap.ui.commons.MessageBox.alert( sap.app.i18n.getProperty("CUSTOMER_REVIEW_SUCCESS_MSG") );
 	}
+
 
 };
